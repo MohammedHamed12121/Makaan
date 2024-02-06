@@ -1,0 +1,22 @@
+- [ ] implement the search bar
+- [ ] when the user use press on search display a pop to ask him to login first 
+- [ ] if the user is logged take him to the places page
+- [ ] user can click on the place card to see the details
+- [ ] as long as the view is not loged in he can't use any function in the detailed page 
+- [ ] if he try to do anything push a popup to make him log in
+- [ ] if user press on the types list if he is not login make a pop to tell him to login
+- [ ] if he is already login redirect him to the places page where he see the filters
+- [ ] 
+- [ ] 
+
+- [ ] places page will display 
+    - [ ] the place with paganition, 
+    - [ ] filter 
+    - [ ] searching 
+
+- [ ] admin page will display 
+    - [ ] the number of places in the system 
+    - [ ] the total purchase done
+    - [ ] the total money people spent 
+    - [ ] the total number of the users
+    - [ ] 
