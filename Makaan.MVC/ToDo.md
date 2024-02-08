@@ -20,3 +20,7 @@
     - [ ] the total money people spent 
     - [ ] the total number of the users
     - [ ] 
+
+
+Fix:
+    - [ ] In home page when you click sell or rent make the button fill to indicate that this the current link active
