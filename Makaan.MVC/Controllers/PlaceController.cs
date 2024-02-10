@@ -4,12 +4,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Makaan.MVC.Data;
+using Makaan.MVC.Models;
+using Makaan.MVC.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Makaan.MVC.Controllers
 {
+    [Authorize]
     public class PlaceController : Controller
     {
         private readonly ILogger<PlaceController> _logger;
@@ -21,12 +25,36 @@ namespace Makaan.MVC.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        // TODO: Make all this parameter an object
+        [HttpGet][HttpPost]
+        public IActionResult Index(PlaceStatus? st, PlaceType? ty, string? searchTerm)
         {
-            // get all places and return them to the view
-            var places = await _context.Places
-                                       .AsNoTracking()
-                                       .ToListAsync();
+            // get the places as ienumrable
+            IEnumerable<Place> placesEnum;
+            placesEnum = _context.Places;
+
+            // check for status filter
+            if(st is not null)
+            {
+                placesEnum = placesEnum.Where(p => p.Status == st);
+            }
+
+            // check for type filter
+            if(ty is not null)
+            {
+                placesEnum = placesEnum.Where(p => p.Type == ty);
+            }
+
+            // check for the search filter
+            if(searchTerm is not null)
+            {
+                placesEnum = placesEnum.Where(p => 
+                                                (p.Title is not null ? p.Title.Contains(searchTerm) : p.Title is null) || 
+                                                (p.Description is not null ? p.Description.Contains(searchTerm) : p.Description is null)
+                                            );
+            }
+            // return the view
+            var places = placesEnum.ToList();
             return View(places);
         }
 

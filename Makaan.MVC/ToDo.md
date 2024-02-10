@@ -24,3 +24,6 @@
 
 Fix:
     - [ ] In home page when you click sell or rent make the button fill to indicate that this the current link active
+    - [ ] fix the search form
+    - [ ] what is the problem with search
+    - [ ] fix the "to top arrow"

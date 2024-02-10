@@ -22,6 +22,10 @@ public class HomeController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
+        if (User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Index", "Place");
+        }
 
         var places = await _context.Places
                                     .Take(6)
