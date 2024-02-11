@@ -26,8 +26,8 @@ namespace Makaan.MVC.Controllers
         }
 
         // TODO: Make all this parameter an object
-        [HttpGet][HttpPost]
-        public IActionResult Index(PlaceStatus? st, PlaceType? ty, string? searchTerm)
+        [HttpGet]
+        public IActionResult Index(PlaceStatus? st, PlaceType? ty, string? searchTerm, int page = 1, int pageSize = 6)
         {
             // get the places as ienumrable
             IEnumerable<Place> placesEnum;
@@ -53,8 +53,15 @@ namespace Makaan.MVC.Controllers
                                                 (p.Description is not null ? p.Description.Contains(searchTerm) : p.Description is null)
                                             );
             }
+
+            // setup the pagination
+            var placesCount = placesEnum.Count();
+            var pager = new Pager(placesCount, page, pageSize);
+            ViewBag.pager = pager;
+            var pageSkip = (page - 1) * pageSize;
+            var places = placesEnum.Skip(pageSkip).Take(pageSize).ToList();
+
             // return the view
-            var places = placesEnum.ToList();
             return View(places);
         }
 

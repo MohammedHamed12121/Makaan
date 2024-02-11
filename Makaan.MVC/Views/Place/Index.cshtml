@@ -3,14 +3,18 @@
 @{
     Layout = "_AppLayout";
     var searchPlace = new Place();
+    Pager pager = new Pager();
+    int pageNumber = 0;
+    if (ViewBag.Pager is not null)
+    {
+        pager = ViewBag.Pager;
+        pageNumber = pager.CurrentPage;
+    }
 }
 
 
 
-<partial 
-    name="_SearchPartial" 
-    model="@searchPlace" 
-/>
+<partial name="_SearchPartial" model="@searchPlace" />
 
 <div class="container-xxl py-5">
     <div class="container">
@@ -23,13 +27,15 @@
 
                         <partial name="_CardPartial" model="@place" />
                     }
-                    <div class="col-12 text-center">
+                    @* try infinte scroll *@
+                    @* <div class="col-12 text-center">
                         <a class="btn btn-primary py-3 px-5" href="">Browse More Property</a>
-                    </div>
+                    </div> *@
                 </div>
             </div>
 
         </div>
     </div>
 </div>
-<!-- Property List End -->
+
+<partial name="_PagerPartial" model="@pager" />
