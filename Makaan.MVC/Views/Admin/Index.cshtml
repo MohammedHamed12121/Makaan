@@ -1,0 +1,88 @@
+@{
+    ViewData["Title"] = "Index";
+    Layout= "_AppLayout";
+}
+
+<table class="table table-hover">
+    <h1>Places</h1>
+    <label id="numOfPlaces">number of plaeces : </label>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Place Status</th>
+            <th>Place Type</th>
+            <th>Country - City - Street</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody id="placesList">
+        
+    </tbody>
+</table>
+
+
+<table class="table table-hover">
+    <h1>Users</h1>
+    <label id="numOfUsers">number of Users : </label>
+    <thead>
+        <tr>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody id="usersList">
+        
+    </tbody>
+</table>
+
+
+<div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var numberOfPlaces = 0;
+        var numberOfUsers = 0
+        $.ajax({
+            url: '/Admin/GetPlaces',
+            method: 'GET',
+            cache: true,
+            success: function (data) {
+                numberOfPlaces = data.length
+                $.each(data, function (index, object) {
+                    var tableRow = `
+                        <tr>
+                            <td>${object.title}</td>
+                            <td>${object.price}</td>
+                            <td>${object.type}</td>
+                            <td>${object.status}</td>
+                            <td>${object.country}-${object.city}-${object.streat}</td>
+                        </tr>
+                    `
+                    $('#placesList').append(tableRow)
+                });
+                $('#numOfPlaces').append(numberOfPlaces)
+            }
+        });
+
+        $.ajax({
+            url: '/Admin/GetUsers',
+            method: 'GET',
+            cache: true,
+            success: function (data) {
+                numberOfUsers = data.length
+                $.each(data, function (index, object) {
+                    var tableRow = `
+                        <tr>
+                            <td>${object.userName}</td>
+                        </tr>
+                    `
+                    $('#usersList').append(tableRow)
+                });
+                $('#numOfUsers').append(numberOfUsers)
+            }
+        });
+    });
+</script>
